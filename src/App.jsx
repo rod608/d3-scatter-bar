@@ -14,7 +14,7 @@ class App extends Component {
   componentDidMount() {
     let self = this;
 
-    d3.csv("../src/data/tips.csv").then((csv_data) => {
+    d3.csv(process.env.PUBLIC_URL + "/tips.csv").then((csv_data) => {
       self.setState({ data: csv_data });
       // console.log(csv_data);
     });
