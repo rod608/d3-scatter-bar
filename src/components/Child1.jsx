@@ -13,8 +13,8 @@ class ScatterPlot extends Component {
 
     // Set the dimensions and margins of the graph
     const margin = { top: 50, right: 10, bottom: 60, left: 50 },
-      width = 800 - margin.left - margin.right, // Increased width
-      height = 600 - margin.top - margin.bottom; // Increased height
+      width = 800 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
 
     // Select the container and set dimensions
     const svg = d3
@@ -34,37 +34,31 @@ class ScatterPlot extends Component {
       .join("text")
       .attr("class", "chart-title")
       .attr("x", (width + margin.left + margin.right) / 2)
-      .attr("y", margin.top / 2) // Position the title above the chart
+      .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "18px")
       .text("Total Bill vs. Tips");
 
     // Add x-axis
     const xData = data.map((item) => item.total_bill);
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(xData)])
-      .range([0, width]);
+    const xScale = d3.scaleLinear().domain([0, 50]).range([0, width]);
     mainGroup
       .selectAll(".x-axis-group")
       .data([0])
       .join("g")
       .attr("class", "x-axis-group")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale).ticks(10).tickValues(d3.range(0, 55, 5)));
 
     // Add y-axis
     const yData = data.map((item) => item.tip);
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, d3.max(yData)])
-      .range([height, 0]);
+    const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
     mainGroup
       .selectAll(".y-axis-group")
       .data([0])
       .join("g")
       .attr("class", "y-axis-group")
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale).ticks(10));
 
     // Add y-axis label (rotated "Tips")
     mainGroup
