@@ -14,14 +14,10 @@ class App extends Component {
   componentDidMount() {
     let self = this;
 
-    d3.csv("/tips.csv")
-      .then((csv_data) => {
-        console.log("Loaded CSV data:", csv_data); 
-        self.setState({ data: csv_data });
-      })
-      .catch((error) => {
-        console.error("Error loading CSV data:", error); 
-      });
+    d3.csv(import.meta.env.BASE_URL + "tips.csv").then((csv_data) => {
+      self.setState({ data: csv_data });
+      // console.log(csv_data);
+    });
   }
 
   render() {
